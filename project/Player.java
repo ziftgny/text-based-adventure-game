@@ -10,16 +10,14 @@ public class Player {
 	private int money;
 	private String name;
 	private String className;
-//sa
+
 
 	void selectClass() {
-		int counter = 1;
 		GameClass[] classes = {new Samurai(),new Archer(),new Knight()};
 		System.out.println("Select your class!");
 		System.out.println("  CLASS     DAMAGE     HEALTH     MONEY");
 		for (GameClass i : classes) {
-			System.out.printf("%d)%-8s%8d%11d%10d\n",counter,i.getName(),i.getDamage(),i.getHealth(),i.getMoney());
-			counter++;
+			System.out.printf("%d)%-8s%8d%11d%10d\n",i.getId(),i.getName(),i.getDamage(),i.getHealth(),i.getMoney());
 		}
 		
 		int classInput = 0;

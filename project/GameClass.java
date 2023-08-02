@@ -1,12 +1,14 @@
 package project;
 
 public abstract class GameClass {
+		private int id;
 	 	private String name;
 		private int damage;
 		private int health;
 		private int money;
-		public GameClass(String name,int damage, int health, int money) {
+		public GameClass(int id,String name,int damage, int health, int money) {
 			super();
+			this.id=id;
 			this.name = name;
 			this.damage = damage;
 			this.health = health;
@@ -35,6 +37,12 @@ public abstract class GameClass {
 		}
 		public void setName(String name) {
 			this.name = name;
+		}
+		public int getId() {
+			return id;
+		}
+		public void setId(int id) {
+			this.id = id;
 		}
 		
 }
