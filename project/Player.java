@@ -23,7 +23,7 @@ public class Player {
 		int classInput = 0;
 		
 		do {	
-				classInput = input.nextInt();
+				 classInput = input.next().charAt(0);
 			switch(classInput) {
 			case 1:
 				this.setClass(classes[0]);

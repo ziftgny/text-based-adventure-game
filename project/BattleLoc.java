@@ -8,7 +8,8 @@ public abstract class BattleLoc extends Location {
 
 	@Override
 	public void onLocation() {
-	
+		System.out.println("Choose area");
+		System.out.println("--------------");
 	}
 
 }
