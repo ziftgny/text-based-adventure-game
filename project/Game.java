@@ -31,7 +31,7 @@ public class Game {
 		+ "materials for a ship.");
 		safeHouse.onLocation();
 		while(true) {
-			
+				//using nextLine() after nextInt() so we can clear our buffer.
 				System.out.println("Choose an action!");
 				System.out.println("------------------------------");
 				System.out.println("1)Move");
@@ -39,27 +39,38 @@ public class Game {
 				System.out.println("3)Inventory");
 				int action_input = 0;
 				do {
+					if(!input.hasNextInt())
+					{
+						System.out.println("enter valid values");
+						input.nextLine();
+						continue;
+					}
 					action_input=input.nextInt();
+					input.nextLine();
 					switch(action_input) {
 					case 1:
 						move(player);
+						
 						break;
 					case 2:
 						Shop shop = new Shop(player,"Shop");
 						shop.onLocation();
+						
 						break;
 					case 3:
 						break;
 					default:
 						System.out.println("enter a valid value");
+						
 						break;
 					}
-					}while(action_input!=1 && action_input!=2 && action_input!=3);
-				
 					if(player.getHealth()==0) {
 						System.out.println("YOU ARE DEAD");
 						break;
 					}
+					}while(!(action_input>=1 && action_input<=3));
+				
+					
 				}
 	}
 	public void move(Player player) {
@@ -67,11 +78,20 @@ public class Game {
 		System.out.println("------------------------------");
 		System.out.println("1)Safe House");
 		System.out.println("2)Battle Locs");
+		System.out.println("q)go back");
 		int action_input = 0;
 		do {
-				action_input=input.next().charAt(0);
+				if(!input.hasNextInt())
+				{
+					if(input.nextLine().equals("q"))
+					break;
+					System.out.println("enter valid values");
+					continue;
+				}
+				action_input=input.nextInt();
+				input.nextLine();
 				switch(action_input) {
-				case '1':
+				case 1:
 					if(Location.getLocationSwitch()==1)
 						System.out.println("you are already there");
 					else
@@ -80,7 +100,7 @@ public class Game {
 						safehouse.onLocation();
 					}
 					break;
-				case '2':
+				case 2:
 					
 					if(Location.getLocationSwitch()==2)
 						System.out.println("you are already there");
@@ -90,7 +110,8 @@ public class Game {
 					System.out.println("enter a valid value");
 					break;
 				}
-		}while(action_input!='1' && action_input!='2' );
+				
+		}while(!(action_input>=1 && action_input<=2));
 		
 		}
 	}

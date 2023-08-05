@@ -1,10 +1,10 @@
 package project;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
 	private Scanner input = new Scanner(System.in);
-	private Inventory inventory = new Inventory();
 	private int damage;
 	private int health;
 	private int money;
@@ -19,27 +19,34 @@ public class Player {
 		for (GameClass i : classes) {
 			System.out.printf("%d)%-8s%8d%11d%10d\n",i.getId(),i.getName(),i.getDamage(),i.getHealth(),i.getMoney());
 		}
-		
+	//  IMPORTANT CODE-------------------------------	
 		int classInput = 0;
-		
 		do {	
-				 classInput = input.next().charAt(0);
-			switch(classInput) {
-			case 1:
-				this.setClass(classes[0]);
-				break;
-			case 2:
-				this.setClass(classes[1]);
-				break;
-			case 3:
-				this.setClass(classes[2]);
-				break;
-			default:
-				System.out.println("please enter valid values");
-				break;
+				if(!input.hasNextInt())
+				{
+					System.out.println("enter valid values");
+					input.nextLine();
+					continue;
 				}
-		}while(classInput!=1 && classInput!=2 && classInput!=3);
+				classInput = input.nextInt();
+				switch(classInput) {
+				case 1:
+					this.setClass(classes[0]);
+					break;
+				case 2:
+					this.setClass(classes[1]);
+					break;
+				case 3:
+					this.setClass(classes[2]);
+					break;
+				default:
+					System.out.println("please enter valid values");
+					break;
+					}
+				input.nextLine();				
+		}while (!(classInput>=1 && classInput<=3));
 		
+	//------------------------------------------------------------
 	}
 	
 	public void setClass(GameClass gameClass) {
@@ -54,13 +61,6 @@ public class Player {
 		this.name = name;
 	}
 
-	public Inventory getInventory() {
-		return inventory;
-	}
-
-	public void setInventory(Inventory inventory) {
-		this.inventory = inventory;
-	}
 	public String getClassName() {
 		return className;
 	}

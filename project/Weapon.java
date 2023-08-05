@@ -1,6 +1,6 @@
 package project;
 
-public abstract class Weapon {
+public  class Weapon {
 	private int id;
 	private String name; 
 	private int damage;
