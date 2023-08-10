@@ -3,28 +3,29 @@ package project;
 import java.util.Scanner;
 
 public class Shop extends SafeLoc{
-	private static int isItFirst=0;
+	private static boolean isItFirst=true;
 	public Shop(Player player, String name) {
 		super(player, name);
 	}
 	
 	@Override
 	public void onLocation(){
-		if(this.getIsItFirst()==0) {
+		if(Shop.isItFirst==true) {
 			System.out.println("Welcome to the shop! you can buy stuff to equip yourself against monsters!\n"
 					+ "dont forget you get to equip one item at a time");
-			this.setIsItFirst(1);
+			Shop.isItFirst=false;
 		}
 		System.out.println("You are now in "+this.getName());
 		menu();
 	}
 
 	public void menu() {
-		/*in this code block the first do while loop gives us the ability to go back to one step
-		  back with 'q' keyword and the second do while loop makes sure we enter intended
-		  values to the scanner and dont break our program so its necessary */
+		/*in this code block with the inner do while loop we make sure user inputs are correct 
+		  and intended we can also go back to the main menu with 'q' letter.
+		  As we add more branches with "switch(EquipmentSelection)" we may want to go one step
+		  back if we press 'q' it takes us to the last branch we were before we entered our last input  */
 		int weaponloopchecker;//if checkers get value 1 we go back by 1 step if its
-		int armorloopchecker;//0 we go back to the first menu we are greeted(choose action menu)
+		int armorloopchecker;//0 we go back to the first menu (choose action menu)
 		do {
 			weaponloopchecker=0;
 			armorloopchecker=0;
@@ -58,7 +59,7 @@ public class Shop extends SafeLoc{
 								break;
 						}
 				}while(!(equipmentSelection>=1 && equipmentSelection<=2));
-	}while(weaponloopchecker==1 || armorloopchecker==1);
+		}while(weaponloopchecker==1 || armorloopchecker==1);
 	
 	}
 	
@@ -165,10 +166,5 @@ public class Shop extends SafeLoc{
 				System.out.println("there is no item for that id");
 		}while(true);
 	}
-	public int getIsItFirst() {
-		return isItFirst;
-	}
-	public void setIsItFirst(int isItFirst) {
-		this.isItFirst = isItFirst;
-	}
+	
 }

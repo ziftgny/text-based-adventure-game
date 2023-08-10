@@ -3,7 +3,7 @@ package project;
 import java.util.Scanner;
 
 public class SafeHouse extends SafeLoc{
-	private static int isItFirst=0;
+	private static boolean isItFirst=true;
 	private int locControl=0;
 	private Scanner input = new Scanner(System.in);
 	public SafeHouse(Player player, String name) {
@@ -11,21 +11,16 @@ public class SafeHouse extends SafeLoc{
 	}
 	@Override
 	public void onLocation() {
-		if (this.getIsItFirst()==0) {
+		if (SafeHouse.isItFirst==true) {
 			System.out.println("This is your safe house! one of the safe locations here you protected from monsters and can restore your health");
-			this.setIsItFirst(1);
+			SafeHouse.isItFirst=false;
 			
 		}
 		setLocationSwitch(1);
 		System.out.println("You are now in "+this.getName());
 		System.out.println("Your health has been restored");
 	}
-	public int getIsItFirst() {
-		return isItFirst;
-	}
-	public void setIsItFirst(int isItFirst) {
-		this.isItFirst = isItFirst;
-	}
+	
 	
 
 }

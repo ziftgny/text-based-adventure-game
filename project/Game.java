@@ -58,6 +58,7 @@ public class Game {
 						
 						break;
 					case 3:
+						Inventory.onLocation(player);
 						break;
 					default:
 						System.out.println("enter a valid value");
