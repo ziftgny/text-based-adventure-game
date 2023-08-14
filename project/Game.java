@@ -24,7 +24,7 @@ public class Game {
 		String name = input.nextLine();
 		Player player = new Player(name);
 		player.selectClass();
-		System.out.println("Player named "+player.getName()+" created from "+player.getClassName()+" class!");
+		System.out.println("Player named "+player.getName()+" created from "+player.getChoosenClass().getName()+" class!");
 		SafeHouse safeHouse = new SafeHouse(player,"Safe House");
 		System.out.println("You found a tribe in the woods offering shelter. Despite the language barrier, you bonded with\n"
 		+ "them. They revealed that to escape the island, you must clear monster-inhabited places and gather\n"
@@ -58,7 +58,7 @@ public class Game {
 						
 						break;
 					case 3:
-						Inventory.onLocation(player);
+						player.getInventory().onLocation();
 						break;
 					default:
 						System.out.println("enter a valid value");

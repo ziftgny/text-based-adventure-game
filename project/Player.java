@@ -4,13 +4,13 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
+	private Inventory inventory = new Inventory(this);
 	private Scanner input = new Scanner(System.in);
 	private int damage;
 	private int health;
 	private int money;
 	private String name;
-	private String className;
-
+	private GameClass choosenClass;
 
 	void selectClass() {
 		GameClass[] classes = {new Samurai(),new Archer(),new Knight()};
@@ -50,10 +50,12 @@ public class Player {
 	}
 	
 	public void setClass(GameClass gameClass) {
-		this.setClassName(gameClass.getName());
-		this.setDamage(gameClass.getDamage());
+		this.setChoosenClass(gameClass);
+		this.setBaseDamage(gameClass.getDamage());
 		this.setMoney(gameClass.getMoney());
 		this.setHealth(gameClass.getHealth());
+		
+		
 	}
 	
 	public Player(String name) {
@@ -61,19 +63,25 @@ public class Player {
 		this.name = name;
 	}
 
-	public String getClassName() {
-		return className;
+	
+
+	public GameClass getChoosenClass() {
+		return choosenClass;
 	}
 
-	public void setClassName(String className) {
-		this.className = className;
+	public void setChoosenClass(GameClass choosenClass) {
+		this.choosenClass = choosenClass;
 	}
 
 	public int getDamage() {
 		return damage;
 	}
-
 	public void setDamage(int damage) {
+		this.damage = this.getChoosenClass().getDamage();
+		this.damage = damage+this.damage;
+	}
+
+	public void setBaseDamage(int damage) {
 		this.damage = damage;
 	}
 
@@ -101,4 +109,9 @@ public class Player {
 		this.name = name;
 	}
 
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	
 }

@@ -2,41 +2,47 @@ package project;
 
 import java.util.Scanner;
 
-public abstract class Inventory {
-	private static Scanner input = new Scanner(System.in);
-	private static boolean isItFirst=true;
-	private static boolean celestialHeartwood=false;
-	private static boolean starforgedAlloy=false;
-	private static boolean aquaPearl=false;
-	private static Weapon equippedWeapon;
-	private static Armor equippedArmor;
-	private static boolean[] boughtWeapons= {false,false,false};
-	private static boolean[] boughtArmors= {false,false,false};
+public  class Inventory {
+	private Player player;
+	private Scanner input = new Scanner(System.in);
+	private boolean isItFirst=true;
+	private boolean celestialHeartwood=false;
+	private boolean starforgedAlloy=false;
+	private boolean aquaPearl=false;
+	private Weapon equippedWeapon=null;
+	private Armor equippedArmor=null;
+	private boolean[] boughtWeapons= {false,false,false};
+	private boolean[] boughtArmors= {false,false,false};
 	// should have used a database for these but whatever...
-	private static Armor[] armor = {new Armor(1,"Leather Armor",1,15),new Armor(2,"Chain Mail",3,25),new Armor(3, "Iron Armor", 5, 40)};
-	private static Weapon[] weapon = {new Weapon(1,"Revolver",2,25),new Weapon(2,"Rapier",3,35),new Weapon(3, "Rifle", 7, 45)};
-	public static void onLocation(Player player) {
+	private  Armor[] armor = {new Armor(1,"Leather Armor",1,15),new Armor(2,"Chain Mail",3,25),new Armor(3, "Iron Armor", 5, 40)};
+	private  Weapon[] weapon = {new Weapon(1,"Revolver",2,25),new Weapon(2,"Rapier",3,35),new Weapon(3, "Rifle", 7, 45)};
+	Inventory(Player player){
+		this.player = player;
+	}
+	public  void onLocation() {
 		System.out.println("INVENTORY");
 		System.out.println("------------------------------");
-		if(Inventory.isItFirst==true) {
+		if(this.isItFirst==true) {
 			System.out.println("This is your inventory! Here you can see ; The items you have bought,crucial items you have gathered for building your ship\n"
 					+ "and info about your character");
 		}
-		Inventory.isItFirst=false;
-		showInventory(player);
+		System.out.println();
+		this.isItFirst=false;
+		showInventory();
 		
 	}
-	public static void showInventory(Player player) {
+	public  void showInventory() {
 		int weaponloopchecker;//if checkers get value 1 we go back by 1 step if its
 		int armorloopchecker;//0 we go back to the first menu (choose action menu)
 		do {
 			weaponloopchecker=0;
 			armorloopchecker=0;
-			characterinfo(player);
+			characterinfo();
 			System.out.println();
 			showShipParts();
 			System.out.println();
 			showEquippedItems();
+			System.out.println();
 			showWeapon();
 			System.out.println();
 			showArmor();
@@ -47,19 +53,19 @@ public abstract class Inventory {
 			int equipmentSelection=0;
 				do
 				{	
-					if (!input.hasNextInt())
+					if (!this.input.hasNextInt())
 						{
-							if (input.nextLine().equals("q"))
+							if (this.input.nextLine().equals("q"))
 							break;
 							System.out.println("enter valid values");
 							continue;
 						}
 						equipmentSelection=input.nextInt();
-						input.nextLine();
+						this.input.nextLine();
 						switch(equipmentSelection)
 						{
 							case 1:
-								
+								weaponloopchecker=equipWeapon();
 							break;
 							case 2:
 								armorloopchecker=equipArmor();
@@ -73,10 +79,16 @@ public abstract class Inventory {
 	
 		
 	}
-	public static void characterinfo(Player player) {
-		System.out.println("Username:"+player.getName()+"   Class:"+player.getClassName()+"   Damage:"+player.getDamage()+"   Health:"+player.getHealth()+"   Money:"+player.getMoney());
+	public  void characterinfo() {
+		System.out.print("Username:"+player.getName()+"   Class:"+player.getChoosenClass().getName()+"   Damage:"+player.getDamage()+"   Health:"+player.getHealth()+"   Money:"+player.getMoney()+"   Ignore:");
+		if(this.equippedArmor==null) {
+			System.out.println(0);
+		}
+		else {
+			System.out.println(this.equippedArmor.getIgnore()); 
+		}
 	}
-	public static void showShipParts() {
+	public  void showShipParts() {
 		int counter=0;
 		boolean[] array = {celestialHeartwood, starforgedAlloy,aquaPearl};
 		for (int i =0 ; i<array.length ;i++) {
@@ -104,18 +116,28 @@ public abstract class Inventory {
 		System.out.println();
 	}
 	
-	public static void showEquippedItems() {
-		System.out.println("Equipped armor:"+equippedArmor);
+	public  void showEquippedItems() {
+		if (this.equippedArmor == null) {
+			System.out.print("Equipped armor:"+"-"+"   ");
+		}
+		else
+		System.out.print("Equipped armor:"+this.equippedArmor.getName()+"   ");
+		if (equippedWeapon == null) {
+			System.out.print("Equipped weapon:"+"-");
+		}
+		else
+		System.out.print("Equipped weapon:"+this.equippedWeapon.getName());
+		System.out.println();
 	}
 	
 	
-	public static void showWeapon() {
+	public void showWeapon() {
 		int counter =0;
 		System.out.println("WEAPONS");
 		System.out.println("------------------------------");
-		for(int i=0;i<boughtWeapons.length;i++) {
-			if(boughtWeapons[i]==true) {
-				System.out.print(weapon[i].getName()+"   ");
+		for(int i=0;i<this.boughtWeapons.length;i++) {
+			if(this.boughtWeapons[i]==true) {
+				System.out.print(this.weapon[i].getName()+"   ");
 				counter++;
 			}
 		}
@@ -124,11 +146,11 @@ public abstract class Inventory {
 			System.out.println("there are no weapons bought");
 	}
 	
-	public static void showArmor() {
+	public  void showArmor() {
 		int counter=0;
 		System.out.println("ARMORS");
 		System.out.println("------------------------------");
-		for(int i=0;i<boughtArmors.length;i++) {
+		for(int i=0;i<this.boughtArmors.length;i++) {
 			if(boughtArmors[i]==true) {
 				System.out.print(armor[i].getName()+"   ");
 				counter++;
@@ -141,16 +163,17 @@ public abstract class Inventory {
 	
 	}
 	
-	public static int equipArmor() {
-		
+	public  int equipArmor( ) {
 		
 		do {	
 			int counter=0;
-			System.out.println("ARMORS");
+			System.out.println("Armors");
 			System.out.println("------------------------------");
-			for(int i=0;i<boughtArmors.length;i++) {
-				if(boughtArmors[i]==true) {
-					System.out.println(armor[i].getId()+" - "+armor[i].getName());
+			System.out.println("ID   NAME              IGNORE");
+			for(int i=0;i<this.boughtArmors.length;i++) {
+				if(this.boughtArmors[i]==true) {
+					System.out.printf("%d)   %-23s%-10d\n",this.armor[i].getId(),this.armor[i].getName(),this.armor[i].getIgnore());
+
 					counter++;
 				}
 			}
@@ -158,19 +181,20 @@ public abstract class Inventory {
 			if (counter==0)
 				System.out.println("there are no armors bought");
 			System.out.println("q)go back");
-			if(!input.hasNextInt())
+			if(!this.input.hasNextInt())
 			{
-				if(input.nextLine().equals("q"))
+				if(this.input.nextLine().equals("q"))
 					return 1;
 				System.out.println("enter valid values");
 				continue;
 			}
 			int checker=0;
-			int selectedItem = input.nextInt();
-			input.nextLine();
-			for (int i =0;i<boughtArmors.length;i++) {
-				if((i+1)==selectedItem && boughtArmors[i]==true) {
-					equippedArmor=armor[i];
+			int selectedItem = this.input.nextInt();
+			this.input.nextLine();
+			for (int i =0;i<this.boughtArmors.length;i++) {
+				if((i+1)==selectedItem && this.boughtArmors[i]==true) {
+					equippedArmor=this.armor[i];
+					
 					System.out.println("item has been equipped");
 					checker++;
 				}
@@ -182,6 +206,51 @@ public abstract class Inventory {
 		
 		
 	}
+	public  int equipWeapon() {
+
+		do {	
+			int counter=0;
+			System.out.println("Weapons");
+			System.out.println("------------------------------");
+			System.out.println("ID   NAME        DAMAGE");
+			for(int i=0;i<this.boughtWeapons.length;i++) {
+				if(this.boughtWeapons[i]==true) {
+					System.out.printf("%d)   %-8s%10d\n",this.weapon[i].getId(),this.weapon[i].getName(),this.weapon[i].getDamage());
+					counter++;
+				}
+			}
+			System.out.println();
+			if (counter==0)
+				System.out.println("there are no armors bought");
+			System.out.println("q)go back");
+			if(!this.input.hasNextInt())
+			{
+				if(this.input.nextLine().equals("q"))
+					return 1;
+				System.out.println("enter valid values");
+				continue;
+			}
+			int checker=0;
+			int selectedItem = this.input.nextInt();
+			this.input.nextLine();
+			for (int i =0;i<this.boughtWeapons.length;i++) {
+				if((i+1)==selectedItem && this.boughtWeapons[i]==true) {
+					this.equippedWeapon=this.weapon[i];
+					this.player.setDamage(this.equippedWeapon.getDamage());
+					System.out.println("item has been equipped");
+					checker++;
+				}
+			}
+			if (checker==0)
+				System.out.println("there is no item for that id");
+		}while(true);
+		
+		
+		
+		
+		
+	}
+	
 	
 	public boolean isCelestialHeartwood() {
 		return celestialHeartwood;
@@ -219,17 +288,17 @@ public abstract class Inventory {
 	public Weapon[] getWeapon() {
 		return weapon;
 	}
-	public static boolean[] getBoughtWeapons() {
+	public  boolean[] getBoughtWeapons() {
 		return boughtWeapons;
 	}
-	public static void setBoughtWeapons(Weapon weapon) {
-		Inventory.boughtArmors[weapon.getId()-1] = true;
+	public  void setBoughtWeapons(Weapon weapon) {
+		this.boughtWeapons[weapon.getId()-1] = true;
 	}
-	public static boolean[] getBoughtArmors() {
+	public  boolean[] getBoughtArmors() {
 		return boughtArmors;
 	}
-	public static void setBoughtArmors(Armor armor) {
-		Inventory.boughtArmors[armor.getId()-1] = true;
+	public  void setBoughtArmors(Armor armor) {
+		this.boughtArmors[armor.getId()-1] = true;
 	}
 	
 	

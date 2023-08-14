@@ -109,16 +109,24 @@ public class Shop extends SafeLoc{
 		int checker=0;
 		int selectedItem = this.getInput().nextInt();
 		this.getInput().nextLine();
-		for (Weapon i : weapon) {
-			if(i.getId()==selectedItem) {
+		for (int i =0; i<weapon.length;i++) {
+			if(weapon[i].getId()==selectedItem) {
 				checker++;
 				
-				if(this.getPlayer().getMoney()>=i.getCost()) {
-					int remaining = this.getPlayer().getMoney()-i.getCost();
-					this.getPlayer().setMoney(remaining);
-					System.out.println("purchase was successful!");
-					System.out.println("you have "+remaining+" gold left");
-					Inventory.setBoughtWeapons(i);
+				if(this.getPlayer().getMoney()>=weapon[i].getCost()) {
+					
+						if(this.getPlayer().getInventory().getBoughtWeapons()[i]==false) {
+							int remaining = this.getPlayer().getMoney()- weapon[i].getCost();
+							this.getPlayer().setMoney(remaining);
+							System.out.println("purchase was successful!");
+							System.out.println("you have "+remaining+" gold left");
+							this.getPlayer().getInventory().setBoughtWeapons(weapon[i]);
+						}
+						else
+						{
+							System.out.println("you already bought that item");
+						}
+					
 					}
 					else 
 					{
@@ -146,15 +154,24 @@ public class Shop extends SafeLoc{
 			int checker=0;//checking if the item is in the array
 			int selectedItem = this.getInput().nextInt();
 			this.getInput().nextLine();
-			for (Armor i : armor) {
-				if(i.getId()==selectedItem) {
+			for (int i =0; i<armor.length;i++) {
+				if(armor[i].getId()==selectedItem) {
 					checker++;
-					if(this.getPlayer().getMoney()>=i.getCost()) {
-						int remaining = this.getPlayer().getMoney()-i.getCost();
-						this.getPlayer().setMoney(remaining);
-						System.out.println("purchase was successful!");
-						System.out.println("you have "+remaining+" gold left");
-						Inventory.setBoughtArmors(i);
+					
+					if(this.getPlayer().getMoney()>=armor[i].getCost()) {
+						
+							if(this.getPlayer().getInventory().getBoughtArmors()[i]==false) {
+								int remaining = this.getPlayer().getMoney()- armor[i].getCost();
+								this.getPlayer().setMoney(remaining);
+								System.out.println("purchase was successful!");
+								System.out.println("you have "+remaining+" gold left");
+								this.getPlayer().getInventory().setBoughtArmors(armor[i]);
+							}
+							else
+							{
+								System.out.println("you already bought that item");
+							}
+						
 						}
 						else 
 						{

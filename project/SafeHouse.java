@@ -18,6 +18,7 @@ public class SafeHouse extends SafeLoc{
 		}
 		setLocationSwitch(1);
 		System.out.println("You are now in "+this.getName());
+		this.getPlayer().setHealth(this.getPlayer().getChoosenClass().getHealth());
 		System.out.println("Your health has been restored");
 	}
 	
