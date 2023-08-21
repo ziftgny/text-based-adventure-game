@@ -2,7 +2,7 @@ package project;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+import project.Game;
 public class Main {
 
 	public static void main(String[] args) {
