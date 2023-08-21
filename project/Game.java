@@ -178,7 +178,7 @@ public class Game {
 			if (checker==3) {
 				System.out.println("------------------------------");
 				System.out.println();
-				System.out.println("After gathering the items to build a ship and leave the island. With farewells exchanged, you set sail toward new horizons, carrying memories and the island's teachings as they embraced an unknown but promising future.");
+				System.out.println("After gathering the items to build a ship and leave the island. With farewells exchanged, you set sail toward new horizons,\n carrying memories and the island's teachings as they embraced an unknown but promising future.");
 				System.out.println();
 				System.out.println("------------------------------");
 
