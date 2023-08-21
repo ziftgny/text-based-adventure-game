@@ -3,12 +3,12 @@ package project;
 import java.util.Scanner;
 
 public abstract class Location {
-		private static Scanner input = new Scanner(System.in);
+		protected static Scanner input = new Scanner(System.in);
 		private static int locationSwitch=0;
 		//locationSwitch is our variable to declare which map is our character in
 		//1-SafeHouse
 		//2-Battle Loc
-		private Player player;
+		protected Player player;
 		private String name;
 		
 		public Location(Player player, String name) {

@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class SafeHouse extends SafeLoc{
 	private static boolean isItFirst=true;
 	private int locControl=0;
-	private Scanner input = new Scanner(System.in);
 	public SafeHouse(Player player, String name) {
 		super(player, name);
 	}
