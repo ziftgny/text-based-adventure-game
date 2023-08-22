@@ -4,7 +4,10 @@ import java.util.*;
 
 public class Game {
 	private Scanner input = new Scanner(System.in);
-	
+	//RETURN VALUE MEANINGS
+	//0-DEFAULT
+	//1-GO BACK
+	//3-DEATH
 	public int start() {
 		System.out.println("You slowly regain consciousness, the gentle lapping of waves against the shore reaching your ears. Blinking against \n"
 		+ "the bright"
